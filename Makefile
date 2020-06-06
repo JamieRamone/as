@@ -1,4 +1,4 @@
-BINARY =		as
+BINARY =		runas
 CFLAGS =		-fno-builtin-log
 CFLAGS +=		-fzero-initialized-in-bss
 CFLAGS +=		-fomit-frame-pointer
@@ -13,25 +13,19 @@ CFLAGS +=		-s
 CFLAGS +=		-Wall
 CFLAGS +=		-fno-inline
 CFLAGS +=		-Werror
-#GENERATED_SOURCES =	confparser.c confscanner.c
-#GENERATED_OBJECTS =	confparser.o confscanner.o
 SOURCES =		$(shell echo *.c)
 OBJECTS =		$(SOURCES:.c=.o)
 CC =			gcc
-LEX =			flex
-YACC =			bison
 
-.PHONY: all prelude install clean ${GENERATED_SOURCES}
+.PHONY: all prelude install clean
 
 .SUFFIXES:
-.SUFFIXES: .c .h .y .l
+.SUFFIXES: .c .h
 
 %: %.c
 %: %.h
-%: %.y
-%: %.l
 
-all: prelude ${GENERATED_SOURCES} ${BINARY}
+all: prelude ${BINARY}
 
 .NOTPARALLEL: prelude install clean
 
@@ -42,24 +36,17 @@ prelude:
 	@echo "Compiling $<..."
 	@$(CC) ${CFLAGS} -c $^ -o $@
 
-#confscanner.c: confscanner.l
-#	@echo "Pregenerating $<..."
-#	@$(LEX) -X -Ca -Cem -B -o confscanner.c $<
-
-#confparser.c: confparser.y
-#	@echo "Pregenerating $<..."
-#	@$(YACC) -y -d -t -o confparser.c $<
-
-${BINARY}: ${GENERATED_OBJECTS} ${OBJECTS}
+${BINARY}: ${OBJECTS}
 	@echo "linking ${BINARY}..."
 	@echo "(${OBJECTS})"
 	gcc ${CFLAGS} -o ${BINARY} ${OBJECTS}
 
 install: ${BINARY}
-	@echo "installing the as binary..."
+	@echo "installing the runas binary..."
 	@rm -f /etc/${BINARY}
 	@cp -v ${BINARY} /etc
 
 clean:
 	@echo "Cleaning up..."
-	@rm -f ${BINARY} ${OBJECTS} ${GENERATED_SOURCES} ${GENERATED_OBJECTS} confparser.h
+	@rm -f ${BINARY} ${OBJECTS}
+

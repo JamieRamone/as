@@ -1,0 +1,12 @@
+This is a UNIX command line administrative tool to run a command another user. This command may only be run by the ssystem
+administrator i.e. the user with UID 0. It is built using GNU make, issuing make on the command line (whilst in this directory), and
+installs to /etc. To perform the installation, you issue make install on the command line.
+
+It takes two arguments: the account name of the desired user you'ld like to run a command as, and the command itself. If only the
+user is given it'll complain and abort. It's also positional: the first argument is the user, the second one is the command, period.
+They can't be supplied via position independent modifiers (e.g. -u user -c command <-> -c command -u user). It'll also fail if the
+given account name can't be found in the /etc/passwd. It'll also accept the single '-?', '-h', or '--help' argument, which causes it
+to print a help message about how to use it.
+
+Jamie Ramone.
+

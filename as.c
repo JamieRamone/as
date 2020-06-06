@@ -17,7 +17,9 @@ static inline void print_help ( register const char * me )
 	printf ( "Usage:\t%s user command\n\t%s <-?|-h|--help>\n\n", me, me );
 	printf ( "   The second form prints this message. The first form runs the given command as the given user, by changing to that account and then\n" );
 	printf ( "running a shell which then runs the given command. Running the command in a shell instead of directly invoking it allows it to been\n" );
-	printf ( "enclosed in single quotes and still be able to expand shell patterns.\n" );
+	printf ( "enclosed in single quotes and still be able to expand shell patterns.\n\n" );
+	printf ( "   This program is copyright (c) Jamie Ramone, Mondo Megagames (http://www.mondomegagames.epizy.com/). It is licensed\n" );
+	printf ( "under the terms of the GNU General Public License, either version 3 or, if you prefer, a later version." );
 };
 
 static inline void process_arguments ( register const int arguments, register const char * argument [] )
